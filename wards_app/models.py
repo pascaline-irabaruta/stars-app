@@ -10,3 +10,16 @@ from pyuploadcare.dj.models import ImageField
 import statistics
 
 # Create your models here.
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
+    bio = models.TextField(blank=True)
+    profile_pic = ImageField(blank=True, manual_crop="")
+
+    def save_profile(self):
+        self.save()
+
+    def get_user_projects(self):
+        return self.projects.all
+
+    def __str__(self):
+        return self.user.username
