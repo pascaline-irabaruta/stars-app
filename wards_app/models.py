@@ -23,3 +23,17 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.user.username
+
+class Project(models.Model):
+    author = models.ForeignKey(User, related_name="projects", on_delete=models.CASCADE)
+    title = models.CharField(max_length=144)
+    description = HTMLField()
+    project_pic = ImageField(manual_crop="")
+    publish_date = models.DateTimeField(auto_now_add=True)
+    live_site = models.URLField(max_length=256)
+
+    def save_project(self):
+        self.save()
+
+    def get_absolute_url(self):
+        return reverse("project_detail", kwargs={"pk":self.pk})
