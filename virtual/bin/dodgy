@@ -1,0 +1,4 @@
+#!/home/pascy/Documents/djangol/awards/virtual/bin/python
+
+import dodgy.run
+dodgy.run.run()
