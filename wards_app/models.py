@@ -44,3 +44,15 @@ class Project(models.Model):
 
     def __str__(self):
         return self.title
+
+class Review(models.Model):
+    project = models.ForeignKey(Project, related_name="reviews", on_delete=models.CASCADE)
+    author = models.ForeignKey(User, related_name="reviews", on_delete=models.CASCADE)
+    comment = models.TextField()
+    design_score = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(10)])
+    usability_score = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(10)])
+    content_score = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(10)])
+    star_rating = GenericRelation(Rating, related_query_name='ratings')
+
+    def save_review(self):
+        self.save()
