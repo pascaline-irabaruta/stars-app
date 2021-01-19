@@ -56,3 +56,11 @@ class Review(models.Model):
 
     def save_review(self):
         self.save()
+    def get_average_score(self):
+        return round(statistics.mean([self.design_score, self.usability_score, self.content_score]),1)
+
+    def get_absolute_url(self):
+        return reverse("project_detail", kwargs={"pk":self.pk})
+
+    def __str__(self):
+        return self.comment
