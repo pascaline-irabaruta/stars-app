@@ -24,3 +24,11 @@ class ProjectList(ListView):
         context = super().get_context_data(**kwargs)
         context["current_user"] = self.request.user
         return context
+class ProjectDetail(DetailView):
+    model = Project
+    context_object_name = "project"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["current_user"] = self.request.user
+        return context
