@@ -1,0 +1,46 @@
+<nav class="mb-1 navbar navbar-expand-lg navbar-dark z-depth-1 navfont z-depth-1 fixed-top" >
+    <div class="container mid">
+        <a class="navbar-brand big-brand" href="{%url 'project_list'%}"><img src="https://toppng.com/uploads/preview/5-star-rating-logo-11549725771reuhxkq5ac.png" alt="">AWARDS...</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-333"
+            aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent-333">
+            <ul class="navbar-nav mr-auto">
+            </ul>
+            <ul class="navbar-nav ml-auto nav-flex-icons">
+                <li class="nav-item">
+                    <a href="https://github.com/pascaline-irabaruta"class="nav-link waves-effect waves-light">
+                        <i class="fab fa-github-square"></i>
+                    </a>
+                </li>
+                {%if user.is_authenticated%}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-user"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right dropdown-default"
+                        aria-labelledby="navbarDropdownMenuLink-333">
+                        <a class="dropdown-item" href="{%url 'user_detail' user.pk%}">Profile</a>
+                        <a class="dropdown-item" href="{%url 'project_create'%}">Submit your Site!</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/logout">Logout</a>
+                    </div>
+                </li>
+                {%else%}
+                <li class="nav-item">
+                    <a class="nav-link waves-effect waves-light" href="/accounts/login">
+                        Login
+                    </a>
+                </li>
+                {%endif%}
+                <form class="form-inline" action="{% url 'search_results' %}">
+                    <div class="md-form my-0">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="search"><i class="fab fa-search"></i>
+                    </div>
+                </form>
+            </ul>
+        </div>
+    </div>
+</nav>
