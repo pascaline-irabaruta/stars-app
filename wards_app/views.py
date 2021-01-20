@@ -97,3 +97,21 @@ def update_profile(request, pk):
     else:
         form = UpdateProfileForm()
     return render(request, "premios_app/user_profile_form.html", context={"form":form,"current_user":current_user,"profile":profile})
+
+@login_required
+def review_project(request, pk):
+    project = get_object_or_404(Project, pk=pk)
+    current_user = request.user
+
+    if request.method == "POST":
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.project = project
+            review.author = current_user
+            review.save()
+            return redirect("project_detail", pk=project.pk)
+    else:
+        form = ReviewForm()
+    return render(request, "premios_app/review_form.html", context={"form":form,
+                                                                    "project":project})
