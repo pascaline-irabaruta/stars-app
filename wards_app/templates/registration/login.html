@@ -1,0 +1,39 @@
+{%extends "premios_app/base.html"%}
+{%load bootstrap4%}
+{%block content%}
+<div class="container mid">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            {% if form.errors %}
+            <p> Incorrect username or password </p>
+            {% endif %}
+            <div class="panel panel-default">
+
+                <div class="panel-heading">
+                    <h4 class="text-center auth-info" style="margin-top: 20px;">Sign In</h4>
+                </div>  
+                <div class="panel-body">
+
+                    <form action="/accounts/login/" method="post">
+                        {% csrf_token %}
+                        {% bootstrap_form form%}
+
+                        <div class="form-group">
+                            <input type="submit" class="btn text-white brown-button" value="Login">
+                        </div>
+
+                        <input type="hidden" name="next" value="{{next}}">
+
+                    </form>
+                    <p class="text-center brown-color">Don't have an account?<a href="/accounts/register/"> Sign Up</a></p>
+
+                </div>
+
+            </div>
+
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</div>
+{%endblock%}
