@@ -32,7 +32,7 @@ class ProjectDetail(DetailView):
         context = super().get_context_data(**kwargs)
         context["current_user"] = self.request.user
         return context
-        
+
 class ProjectCreate(LoginRequiredMixin, CreateView):
     login_url = "/accounts/login/"
     redirect_field_name = "premios_app/project_detail.html"
@@ -42,6 +42,17 @@ class ProjectCreate(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["current_user"] = self.request.user
+        return context
+
+class ProjectUpdate(LoginRequiredMixin ,UpdateView):
+    login_url = "/accounts/login/"
+    redirect_field_name = "premios_app/project_detail.html"
+    model = Project
+    form_class = ProjectForm
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
