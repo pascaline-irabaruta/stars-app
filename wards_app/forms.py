@@ -20,3 +20,14 @@ class ProjectForm(forms.ModelForm):
             "description":TinyMCE(attrs={'cols': 116, 'rows': 15}),
             "live_site":forms.URLInput(attrs={"class":"form-control mb-4"}),
         }
+
+class ReviewForm(forms.ModelForm):
+    class Meta:
+        model = Review
+        fields = ("comment", "design_score", "usability_score", "content_score",)
+        widgets = {
+            "comment":forms.Textarea(attrs={"class":"form-control mb-4"}),
+            "design_score":forms.Select(choices=SCORES, attrs={"class":"form-control mb-4"}),
+            "usability_score":forms.Select(choices=SCORES, attrs={"class":"form-control mb-4"}),
+            "content_score":forms.Select(choices=SCORES, attrs={"class":"form-control mb-4"}),
+        }
