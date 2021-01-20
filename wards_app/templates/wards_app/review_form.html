@@ -1,0 +1,14 @@
+{%extends "wards_app/base.html"%}
+{%block content%}
+{%include "wards_app/navbar.html"%}
+
+<div class="container-fluid mid">
+    <h2 class="no-projects" style="margin-top: 20px;">Leave us a review</h2>
+    <form method="POST" class="review-form">
+        {%csrf_token%}
+        {{form.as_p}}
+        <button type="submit" class="btn brown-button text-white w-border">Submit Review</button>
+    </form>
+</div>
+
+{%endblock%}
