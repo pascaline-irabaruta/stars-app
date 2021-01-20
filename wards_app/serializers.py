@@ -15,3 +15,8 @@ class ProjectSerializer(serializers.ModelSerializer):
         model = Project
         fields = ("id", "author", "title", "description", "publish_date",
                   "project_pic", "live_site", "reviews",) # to add author and reviews
+class UserSerializer(serializers.ModelSerializer):
+    projects = ProjectSerializer(many=True, read_only=True)
+    class Meta:
+        model = User
+        fields = ("id", "username", "email", "projects")
