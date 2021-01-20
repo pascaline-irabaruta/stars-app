@@ -1,0 +1,24 @@
+{%extends "wards_app/base.html"%}
+{%block content%}
+{%include "wards_app/navbar.html"%}
+<div id="jumbo" class="jumbotron jumbotron-fluid text-center landing-jumbotron z-depth-0">
+    {%if not form.instance.id%}
+    <h3 class="jumbotron-header landing-jumbotron">Share your Site</h3>
+    <p class="brown-color">And be rated...<p>
+            {%else%}
+            <h3 class="jumbotron-header landing-jumbotron">Update your work</h3>
+            <p class="brown-color">Fix a typo, or spice things up...<p>
+                    {%endif%}
+</div>
+
+<div class="container-fluid mid">
+    <h2 class="no-projects">Please fill the form</h2>
+    <form method="POST" class="form-group project-form" enctype="multipart/form-data">
+        {%csrf_token%}
+        {{form.as_p}}
+        <div class="text-center">
+            <button class="btn brown-button text-white w-border" type="submit">Submit</button>
+        </div>
+    </form>
+</div>
+{%endblock%}
