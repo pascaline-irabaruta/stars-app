@@ -69,3 +69,15 @@ class ProjectDelete(LoginRequiredMixin, DeleteView):
         context = super().get_context_data(**kwargs)
         context["current_user"] = self.request.user
         return context
+
+class UserDetail(LoginRequiredMixin, DetailView):
+    login_url = "/accounts/login/"
+    redirect_field_name = "premios_app/user_detail.html"
+    model = User
+    template_name = "premios_app/user_detail.html"
+    context_object_name = "user"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["current_user"] = self.request.user
+        return context
