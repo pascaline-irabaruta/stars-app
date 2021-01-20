@@ -1,0 +1,71 @@
+{%extends "wards_app/base.html"%}
+{%load ratings%}
+{%block content%}
+{%include "wards_app/navbar.html"%}
+<div class="container-fluid mid">
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="card z-depth-0 user-detail sticky">
+                {%if user.profile.profile_pic%}
+                <img class="prof-pic img-fluid ml-10" src="{{user.profile.profile_pic.cdn_url}}" alt="profile pic" width="100"
+                    height="100">
+                {%else%}
+                <img class="prof-pic img-fluid ml-10" src="/media/profile_pics/default.png" alt="profile pic" width="100"
+                    height="100">
+                {%endif%}
+                <div class="card-body profile-card p-1">
+                    <h3 class="card-title text-center capitalize">{{user.first_name}} {{user.last_name}}</h3>
+                    <h4 class="card-title text-center">{{user.username}}</h4>
+                    <hr>
+                    {%if user.profile.bio%}
+                    <p><i class="fas fa-quote-left"></i> {{user.profile.bio}}
+                    </p>
+                    {%else%}
+                    <p><i class="fas fa-quote-left"></i> Provide a bio ...
+                    </p>
+                    {%endif%}
+                    {%if current_user.pk == user.pk%}
+
+                    <div class="list-group">
+                        <a href="{%url 'profile_update' user.pk%}" class="btn button w-border edit text-black"><i class="far fa-edit"></i> Edit your Profile</a>
+                    </div>
+                    {%endif%}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-8">
+            {%for project in user.projects.all%}
+            <div class="jumbotron z-depth-0 p-4">
+                <div class="row">
+                    <div class="col-lg-6 col-md-5 offset-md-1 mx-3 my-3">
+                        <div class="view overlay">
+                            <img src="{{project.project_pic.cdn_url}}" class="img-fluid"
+                                alt="Sample image">
+                            <a>
+                                <div class="mask rgba-white-slight"></div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 text-md-left ml-3 mt-3">
+                        <a href="{%url 'project_detail' project.pk%}">
+                            <h3 class="h4 mb-4">{{project.title}}</h3>
+                        </a>
+                        <p class="font-weight-normal">{{project.descritption|safe}}</p>
+                        <p class="font-weight-normal">by <a><strong>{{project.author.username}}</strong></a>,
+                            {{project.publish_date|date:"D M Y"}}</p>
+                        <small class="font-weight-normal">{{project.reviews.count}} review(s)</small>
+                        <p>{% ratings project %}</p>
+                        <a class="btn button text-black w-border" href="{%url 'project_detail' project.pk%}">View</a>
+                    </div>
+                </div>
+            </div>
+            {%empty%}
+            <h2>No projects shared yet</h2>
+            {%endfor%}
+        </div>
+
+    </div>
+
+</div>
+{%endblock%}
