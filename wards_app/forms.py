@@ -31,3 +31,12 @@ class ReviewForm(forms.ModelForm):
             "usability_score":forms.Select(choices=SCORES, attrs={"class":"form-control mb-4"}),
             "content_score":forms.Select(choices=SCORES, attrs={"class":"form-control mb-4"}),
         }
+
+class UpdateProfileForm(forms.ModelForm):
+    profile_pic = ImageField(label='')
+    class Meta:
+        model = Profile
+        fields = ("bio", "profile_pic")
+        widgets = {
+            "bio":forms.Textarea(attrs={"class":"form-control mb-4", "value":"user.profile.bio"}),
+        }
