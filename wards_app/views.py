@@ -113,5 +113,11 @@ def review_project(request, pk):
             return redirect("project_detail", pk=project.pk)
     else:
         form = ReviewForm()
-    return render(request, "premios_app/review_form.html", context={"form":form,
-                                                                    "project":project})
+    return render(request, "premios_app/review_form.html", context={"form":form,"project":project})
+
+@login_required
+def delete_review(request, pk):
+    review = get_object_or_404(Review, pk=pk)
+    project_pk = review.project.pk
+    review.delete()
+    return redirect("project_detail", pk=project_pk)
