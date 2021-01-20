@@ -131,3 +131,9 @@ def search_results(request):
         return render(request, "premios_app/search.html", context={"message":message,"projects":projects})
     message = "You did not search for any term"
     return render(request, "premios_app/search.html", context={"message":message})
+
+class ProjectListView(APIView):
+    def get(self, request):
+        all_projects = Project.objects.all()
+        serializers = ProjectSerializer(all_projects, many=True)
+        return Response(serializers.data) 
