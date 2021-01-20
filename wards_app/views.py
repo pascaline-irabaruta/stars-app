@@ -121,3 +121,13 @@ def delete_review(request, pk):
     project_pk = review.project.pk
     review.delete()
     return redirect("project_detail", pk=project_pk)
+
+def search_results(request):
+    if request.method == "GET":
+        search_term = request.GET.get("search")
+        projects = Project.search_projects(search_term)
+        message = "{}".format(search_term)
+
+        return render(request, "premios_app/search.html", context={"message":message,"projects":projects})
+    message = "You did not search for any term"
+    return render(request, "premios_app/search.html", context={"message":message})
