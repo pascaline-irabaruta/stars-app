@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'premios_app',
+    'wards_app',
     'star_ratings',
     'bootstrap4',
     'tinymce',
