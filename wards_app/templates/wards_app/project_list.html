@@ -1,0 +1,48 @@
+{%extends "premios_app/base.html"%}
+{%load ratings%}
+{%block content%}
+{%include "premios_app/navbar.html"%}
+<div id="jumbo" class="jumbotron text-center landing-jumbotron z-depth-0" style="background-image:url('https://png.pngtree.com/thumb_back/fh260/background/20190223/ourmid/pngtree-pure-color-watercolor-graffiti-gradient-background-board-design-board-design-image_66713.jpg');">
+    <h2 class="jumbotron-header">Welcome to Awards</h2>
+    <p class="reg-text"> A platform where you can share your work to get reviews and review the work of your peers.</p>
+    <a href="{%url 'project_create'%}" class="btn wiggle" class="btn brown-button text-white btn-rounded mb-4 w-border">Share your Work</a>
+</div>
+<div class="container mid">
+    {%for project in projects%}
+    <div class="jumbotron z-depth-0 p-4">
+        <div class="row">
+            <div class="col-md-5 offset-md-1 mx-3 my-3">
+                <div class="view overlay">
+                    <img src="{{project.project_pic.cdn_url}}" class="img-fluid"
+                        alt="Sample image for first version of blog listing">
+                    <a>
+                        <div class="mask rgba-white-slight"></div>
+                    </a>
+                </div>
+
+            </div>
+
+            <div class="col-md-5 text-md-left ml-3 mt-3">
+                <a href="{%url 'project_detail' project.pk%}">
+                    <h4 class="h4 mb-4">{{project.title}}</h4>
+                </a>
+
+                <p class="font-weight-normal">{{project.descritption|safe}}</p>
+                <p class="font-weight-normal">by <a href="{%url 'user_detail' project.author.pk%}"><strong>{{project.author.username}}</strong></a>,
+                    {{project.publish_date|date:"D M Y"}}</p>
+                <small class="font-weight-normal">{{project.reviews.count}} review(s)</small>
+                <p>{% ratings project %}</p>
+
+                <a class="btn button text-black w-border" href="{%url 'project_detail' project.pk%}">View</a>
+                <a class="btn button text-black w-border" href="{{project.live_site}}" target="_blank"><i class="fas fa-link">Visit site</i></a>
+
+            </div>
+
+        </div>
+
+    </div>
+    {%empty%}
+    <h2 class="text-center no-projects">No Projects Posted</h2>
+    {%endfor%}
+</div>
+{%endblock%}
