@@ -58,3 +58,14 @@ class ProjectUpdate(LoginRequiredMixin ,UpdateView):
         context = super().get_context_data(**kwargs)
         context["current_user"] = self.request.user
         return context
+
+class ProjectDelete(LoginRequiredMixin, DeleteView):
+    login_url = "/accounts/login/"
+    redirect_field_name = "premios_app/project_detail.html"
+    model = Project
+    success_url = reverse_lazy("project_list")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["current_user"] = self.request.user
+        return context
