@@ -1,0 +1,40 @@
+{%extends "premios_app/base.html"%}
+{%load ratings%}
+{%block content%}
+{%include "wards_app/navbar.html"%}
+<div class="container mid results">
+    <h2 class="mid" style="margin-top: 20px;">{{projects.count}} result(s) for {{message}}</h2>
+    {%for project in projects%}
+    <div class="jumbotron z-depth-0 p-4">
+        <div class="row">
+            <div class="col-md-5 offset-md-1 mx-3 my-3">
+                <div class="view overlay">
+                    <img src="{{project.project_pic.cdn_url}}" class="img-fluid"
+                        alt="Sample image ">
+                    <a>
+                        <div class="mask rgba-white-slight"></div>
+                    </a>
+                </div>
+
+            </div>
+
+            <div class="col-md-5 text-md-left ml-3 mt-3">
+                <h4 class="h4 mb-4">{{project.title}}</h4>
+
+                <p class="font-weight-normal">{{project.descritption|safe}}</p>
+                <p class="font-weight-normal">by <a
+                        href="{%url 'user_detail' project.author.pk%}"><strong>{{project.author.username}}</strong></a>,
+                    {{project.publish_date|date:"D M Y"}}</p>
+                <small class="font-weight-normal">{{project.reviews.count}} review(s)</small>
+                <p>{% ratings project %}</p>
+
+                <a class="btn button text-black w-border" href="{%url 'project_detail' project.pk%}">View</a>
+
+            </div>
+
+        </div>
+
+    </div>
+    {%endfor%}
+</div>
+{%endblock%}
