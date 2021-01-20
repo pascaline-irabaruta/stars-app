@@ -81,3 +81,19 @@ class UserDetail(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context["current_user"] = self.request.user
         return context
+
+@login_required
+def update_profile(request, pk):
+    profile = User.objects.get(pk=pk)
+    current_user = request.user
+
+    if request.method == "POST":
+        form = UpdateProfileForm(request.POST, request.FILES)
+        if form.is_valid():
+            updated_profile = form.save(commit=False)
+            updated_profile.user = current_user
+            updated_profile.save()
+            return redirect("user_detail", pk=profile.pk)
+    else:
+        form = UpdateProfileForm()
+    return render(request, "premios_app/user_profile_form.html", context={"form":form,"current_user":current_user,"profile":profile})
