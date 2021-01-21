@@ -5,10 +5,12 @@
 </p>
 An web application which allows a user to post a project he/she has created and get it reviewed by his/her peers and
 and review the work submitted by his/her peers.
- A project can be rated based on 3 different criteria
+A project can be rated based on 3 different criteria. 
+
 1. Design
 2. Usability
 3. Content
+
 ## Technologies used
 
 1. Python3
