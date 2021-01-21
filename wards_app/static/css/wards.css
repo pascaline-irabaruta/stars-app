@@ -69,7 +69,6 @@ body {
     bottom: 0;
     width: 100%;
     clear: both;
-    margin-top: 40px;
 }
 
 @media screen and (max-width: 640px) {
