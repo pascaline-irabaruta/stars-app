@@ -23,12 +23,13 @@ TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'h1qgv^as0%ayb6j3*#)-6v5^&+8ulzvr4g)ll-1tj8%)-sk^+i'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
-ALLOWED_HOSTS = []
+DEBUG = config('DEBUG', default=False, cast=bool)
+
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
 
 # Application definition
@@ -86,8 +87,8 @@ TEMPLATES = [
 
 
 UPLOADCARE = {
-    'pub_key': '256cb1a92cd7d6b12916',
-    'secret': 'f7d4f2a8f362abab8c78',
+    'pub_key': config('PUBLIC_KEY'),
+    'secret': config('SECRET'),
 }
 
 
@@ -103,14 +104,30 @@ WSGI_APPLICATION = 'wards_project.wsgi.application'
 #         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 #     }
 # }
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'aw',
-        'USER': 'pascy',
-    'PASSWORD':'21338',
-    }
-}
+MODE=config("MODE", default="dev")
+
+if config('MODE')=="dev":
+   DATABASES = {
+       'default': {
+           'ENGINE': 'django.db.backends.postgresql_psycopg2',
+           'NAME': config('DB_NAME'),
+           'USER': config('DB_USER'),
+           'PASSWORD': config('DB_PASSWORD'),
+           'HOST': config('DB_HOST'),
+           'PORT': '',
+       }
+
+   }
+# production
+else:
+   DATABASES = {
+       'default': dj_database_url.config(
+           default=config('DATABASE_URL')
+       )
+   }
+
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
 
@@ -135,7 +152,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'Africa/Nairobi'
+TIME_ZONE = 'Africa/Kigali'
 
 USE_I18N = True
 
@@ -167,3 +184,4 @@ STAR_RATINGS_RERATE = True
 
 
 # DEPLOYMENT
+django_heroku.settings(locals())
